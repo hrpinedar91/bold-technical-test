@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import {
     Table,
@@ -9,72 +11,19 @@ import {
 } from "@/components/ui/table"
 import { Calculator, Link } from 'lucide-react'
 import { Icons } from './Icons'
+// import { transactions }  from '@/config/transactions'
+import { useContext } from 'react'
+import { transactionsContext } from '@/context/TransactionsContext'
 
 
-const datos = [
-    {
-      "transaccion": "Cobro exitoso",
-      "fecha_y_hora": "04/06/2020 - 17:14:24",
-      "metodo_de_pago": "Mastercard **** **** **** 7711",
-      "id_transaccion_bold": "GZEN23784UBV2",
-      "monto": {
-        "total": "$25.000",
-        "deduccion": "Deducción Bold",
-        "comision": "-$1.5000"
-      }
-    },
-    {
-      "transaccion": "Cobro no realizado",
-      "fecha_y_hora": "04/06/2020 - 17:14:24",
-      "metodo_de_pago": "Mastercard **** **** **** 7711",
-      "id_transaccion_bold": "GZEN23784UBV2",
-      "monto": {
-        "total": "$15.000",
-        "deduccion": null,
-        "comision": null
-      }
-    },
-    {
-      "transaccion": "Cobro exitoso",
-      "fecha_y_hora": "04/06/2020 - 17:14:24",
-      "metodo_de_pago": "Mastercard **** **** **** 7711",
-      "id_transaccion_bold": "GZEN23784UBV2",
-      "monto": {
-        "total": "$25.000",
-        "deduccion": "Deducción Bold",
-        "comision": "-$1.5000"
-      }
-    },
-    {
-      "transaccion": "Cobro exitoso",
-      "fecha_y_hora": "04/06/2020 - 17:14:24",
-      "metodo_de_pago": "Mastercard **** **** **** 7711",
-      "id_transaccion_bold": "GZEN23784UBV2",
-      "monto": {
-        "total": "$25.000",
-        "deduccion": "Deducción Bold",
-        "comision": "-$1.5000"
-      }
-    },
-    {
-      "transaccion": "Cobro no realizado",
-      "fecha_y_hora": "04/06/2020 - 17:14:24",
-      "metodo_de_pago": "Mastercard **** **** **** 7711",
-      "id_transaccion_bold": "GZEN23784UBV2",
-      "monto": {
-        "total": "$25.000",
-        "deduccion": "Deducción Bold",
-        "comision": "-$1.5000"
-      }
-    },
-
-]
 
 interface Props {
     range: string
 }
 
 const TableContent = ({range}: Props) => {
+
+    const {transactions} = useContext(transactionsContext)
     return (
         <div className='w-full'>
             <div className='bg-custom-gradient-table px-12 py-2 rounded-t-xl'>
@@ -91,7 +40,7 @@ const TableContent = ({range}: Props) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody className='bg-white'>
-                    {datos.map((dato, index) => (
+                    {transactions.map((dato, index) => (
                         <TableRow key={index}>
                             <TableCell className='flex gap-2.5 text-[#353C60]'>
                                 {dato.transaccion === 'Cobro exitoso' ? <Link fill='white' className='h-5 w-5' />  : <Calculator fill='white' className='h-5 w-5' />}

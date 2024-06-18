@@ -1,8 +1,24 @@
-import React from 'react'
+'use client'
+
+import React, {useContext} from 'react'
 import { Info } from 'lucide-react'
 import { numberFormat } from '@/helpers/numberFormat'
+import { transactionsContext } from '@/context/TransactionsContext'
 
 const AccountTotal = () => {
+
+    const { totalAmountTransaction } = useContext(transactionsContext)
+
+    console.log(totalAmountTransaction)
+
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString('es-CO', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    
     return (
         <div className="bg-white w-2/5 rounded-xl flex flex-col">
             <div className="flex justify-between items-center bg-custom-gradient-secundary px-4 py-2.5 rounded-t-xl">
@@ -12,10 +28,10 @@ const AccountTotal = () => {
             <div className="flex flex-col items-center p-8">
                 <p className="text-3xl font-bold text-gradient-secundary">
                     {
-                        numberFormat(1560000)
+                        numberFormat(totalAmountTransaction)
                     }
                 </p>
-                <span className="text-[#353C60]">Septiembre 21</span>
+                <span className="text-[#353C60]">{formattedDate}</span>
             </div>
         </div>
     )

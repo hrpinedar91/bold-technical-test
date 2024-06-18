@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar/Navbar";
+import TransaccionProvider from "@/context/TransactionsContext";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -17,12 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">    
+    <html lang="en">
       <body className={cn('relative h-full font-sans antialiased', montserrat.className)}>
         <main className="className='relative flex flex-col min-h-screen">
-          <Navbar />
-
+          <TransaccionProvider>
+            <Navbar />
             {children}
+          </TransaccionProvider>
         </main>
       </body>
     </html>
