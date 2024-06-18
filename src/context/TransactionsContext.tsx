@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, createContext, useEffect } from 'react';
+import { useState, createContext, useEffect, useMemo, useCallback } from 'react';
 import { transactionsMovements } from '@/config/transactions';
 
 interface Props {
@@ -34,71 +34,63 @@ export const transactionsContext = createContext({} as TransactiontypeContext);
 
 const TransactionProvider = ({ children }: Props) => {
     const [transactions, setTransactions] = useState<TransactionItem[]>([]);
-    const [filteredTransactions, setFilteredTransactions] = useState<TransactionItem[]>([]);
-    const [totalAmountTransaction, setTotalAmountTransaction] = useState<number>(0);
     const [filter, setFilter] = useState<string>("");
 
     useEffect(() => {
         // Agregar las transacciones iniciales al estado
         setTransactions(transactionsMovements);
-        setFilteredTransactions(transactionsMovements);
-
-        // Calcular el total de las transacciones
-        const totalAmount = transactionsMovements.reduce((acc, transaction) => {
-            const amount = parseInt(transaction.monto.total.replace(/\./g, ''), 10);
-            return acc + amount;
-        }, 0);
-
-        setTotalAmountTransaction(totalAmount);
     }, []);
 
-    const applyFilter = (filter: string) => {
-        setFilter(filter);
-        let filtered = transactions;
-
+    const filteredTransactions = useMemo(() => {
         const today = new Date();
-        const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
-        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - today.getDay());
+        const lastYear = today.getFullYear() - 1;
+        const startOfSeptemberLastYear = new Date(lastYear, 8, 1);  // September is month 8 (0-indexed)
+        const endOfSeptemberLastYear = new Date(lastYear, 8, 30, 23, 59, 59);
 
         switch (filter) {
             case "today":
-                filtered = transactions.filter(transaction => {
-                    const transactionDate = new Date(transaction.fecha_y_hora.split(' - ')[0].split('/').reverse().join('-'));
-                    return transactionDate.toDateString() === new Date().toDateString();
+                
+                return transactions.filter(transaction => {
+                    const [day, month, year] = transaction.fecha_y_hora.split(' - ')[0].split('/');
+                    const transactionDate = new Date(Number(year), Number(month) - 1, Number(day));
+                    return (
+                        transactionDate.getDate() === today.getDate() &&
+                        transactionDate.getMonth() === today.getMonth() &&
+                        transactionDate.getFullYear() === today.getFullYear()
+                    );
                 });
-                break;
             case "week":
-                filtered = transactions.filter(transaction => {
+                return transactions.filter(transaction => {
                     const transactionDate = new Date(transaction.fecha_y_hora.split(' - ')[0].split('/').reverse().join('-'));
                     return transactionDate >= startOfWeek && transactionDate <= new Date();
                 });
-                break;
-            case "month":
-                filtered = transactions.filter(transaction => {
-                    const transactionDate = new Date(transaction.fecha_y_hora.split(' - ')[0].split('/').reverse().join('-'));
-                    return transactionDate >= startOfMonth && transactionDate <= new Date();
-                });
-                break;
+                case "month":
+                    return transactions.filter(transaction => {
+                        const [day, month, year] = transaction.fecha_y_hora.split(' - ')[0].split('/');
+                        const transactionDate = new Date(Number(year), Number(month) - 1, Number(day));
+                        return transactionDate >= startOfSeptemberLastYear && transactionDate <= endOfSeptemberLastYear;
+                    });
             case "cobroDatafono":
-                filtered = transactions.filter(transaction => transaction.cobroDatafono);
-                break;
+                return transactions.filter(transaction => transaction.cobroDatafono);
             case "cobroLinkPagos":
-                filtered = transactions.filter(transaction => transaction.cobroLinkPagos);
-                break;
+                return transactions.filter(transaction => transaction.cobroLinkPagos);
             default:
-                filtered = transactions;
+                return transactions;
         }
+    }, [transactions, filter]);
 
-        setFilteredTransactions(filtered);
-
-        // Calcular el total de las transacciones filtradas
-        const totalAmount = filtered.reduce((acc, transaction) => {
+    const totalAmountTransaction = useMemo(() => {
+        return filteredTransactions.reduce((acc, transaction) => {
             const amount = parseInt(transaction.monto.total.replace(/\./g, ''), 10);
             return acc + amount;
         }, 0);
+    }, [filteredTransactions]);
 
-        setTotalAmountTransaction(totalAmount);
-    };
+    const applyFilter = useCallback((filter: string) => {
+        setFilter(filter);
+    }, []);
 
     return (
         <transactionsContext.Provider value={{

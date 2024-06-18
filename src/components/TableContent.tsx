@@ -23,7 +23,7 @@ interface Props {
 
 const TableContent = ({range}: Props) => {
 
-    const {transactions} = useContext(transactionsContext)
+    const {transactions, filteredTransactions} = useContext(transactionsContext)
     return (
         <div className='w-full'>
             <div className='bg-custom-gradient-table px-12 py-2 rounded-t-xl'>
@@ -31,7 +31,7 @@ const TableContent = ({range}: Props) => {
             </div>
             <Table>
                 <TableHeader>
-                    <TableRow>
+                    <TableRow className='bg-white text-primary-blue font-semibold text-center'>
                         <TableHead>Transacción</TableHead>
                         <TableHead>Fecha y hora</TableHead>
                         <TableHead>Método de pago</TableHead>
@@ -40,7 +40,7 @@ const TableContent = ({range}: Props) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody className='bg-white'>
-                    {transactions.map((dato, index) => (
+                    {filteredTransactions.map((dato, index) => (
                         <TableRow key={index}>
                             <TableCell className='flex gap-2.5 text-[#353C60]'>
                                 {dato.transaccion === 'Cobro exitoso' ? <Link fill='white' className='h-5 w-5' />  : <Calculator fill='white' className='h-5 w-5' />}

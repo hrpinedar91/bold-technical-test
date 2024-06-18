@@ -2,7 +2,7 @@
 
 
 import { cn } from '@/lib/utils';
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { SlidersVertical } from 'lucide-react';
 import {
     Popover,
@@ -11,56 +11,38 @@ import {
 } from "@/components/ui/popover"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from './ui/button';
+import { transactionsContext } from '@/context/TransactionsContext';
 
 
 
 const StepperFilters = () => {
 
-
-    const [selectedFilter, setSelectedFilter] = useState({
-        today: true,
-        week: false,
-        month: false,
-        CobroDatafono: false,
-        CobroLinkPagos: false,
-        Todos: false,
-    });
+    const { setFilter, applyFilter, filter } = useContext(transactionsContext);
 
 
 
-
-    const handleFilterClick = (filterKey: string) => {
-        setSelectedFilter({
-            today: filterKey === 'today',
-            week: filterKey === 'week',
-            month: filterKey === 'month',
-            CobroDatafono: filterKey === 'CobroDatafono',
-            CobroLinkPagos: filterKey === 'CobroLinkPagos',
-            Todos: filterKey === 'Todos',
-        });
+    const handleFilterChange = (filter: string) => {
+        setFilter(filter);
+        applyFilter(filter);
+        console.log(filter);
     };
-
-
-
-
-
 
 
     return (
         <div className='flex flex-col items-end gap-2 text-primary-blue'>
             <nav className="flex w-full justify-between items-center gap-x-4 bg-white p-2  font-semibold">
-                <div className={cn("flex flex-col py-2 items-center w-1/3 rounded-full", selectedFilter.today && "bg-[#E4E5EE]")}
-                    onClick={() => handleFilterClick('today')}
+                <div className={cn("flex flex-col py-2 items-center w-1/3 rounded-full", filter === 'today' && 'bg-[#e4e5ee]')}
+                    onClick={() => handleFilterChange('today')}
                 >
                     <span>Hoy</span>
                 </div>
-                <div className={cn("flex flex-col py-2 items-center w-1/3 rounded-full", selectedFilter.week && "bg-[#E4E5EE]")}
-                    onClick={() => handleFilterClick('week')}
+                <div className={cn("flex flex-col py-2 items-center w-1/3 rounded-full", filter === 'week' && 'bg-[#e4e5ee]')}
+                    onClick={() => handleFilterChange('week')}
                 >
                     <span>Esta semana</span>
                 </div>
-                <div className={cn("flex flex-col py-2 items-center w-1/3 rounded-full", selectedFilter.month && "bg-[#E4E5EE]")}
-                    onClick={() => handleFilterClick('month')}
+                <div className={cn("flex flex-col py-2 items-center w-1/3 rounded-full", filter === 'month' && 'bg-[#e4e5ee]')}
+                    onClick={() => handleFilterChange('month')}
                 >
                     <span>Septiembre</span>
                 </div>
@@ -76,21 +58,21 @@ const StepperFilters = () => {
                     <SlidersVertical fill='#353c60' className='h-5 w-5' />
                     <PopoverContent>
                         <div className='flex flex-col gap-2 text-primary-blue font-semibold'>
-                            <div className={cn("flex py-2 items-center w-full gap-x-4 rounded-full", selectedFilter.CobroDatafono && "bg-[#E4E5EE]")}
-                                onClick={() => handleFilterClick('CobroDatafono')}
+                            <div className={cn("flex py-2 items-center w-full gap-x-4 rounded-full")}
+                                onClick={() => handleFilterChange('CobroDatafono')}
                             >
                                 <Checkbox />
 
                                 <span>Cobro datafono</span>
                             </div>
-                            <div className={cn("flex py-2 items-center w-full gap-x-4 rounded-full", selectedFilter.CobroLinkPagos && "bg-[#E4E5EE]")}
-                                onClick={() => handleFilterClick('CobroLinkPagos')}
+                            <div className={cn("flex py-2 items-center w-full gap-x-4 rounded-full")}
+                                onClick={() => handleFilterChange('CobroLinkPagos')}
                             >
                                 <Checkbox />
                                 <span>Cobro link pagos</span>
                             </div>
-                            <div className={cn("flex py-2 items-center w-full gap-x-4 rounded-full", selectedFilter.Todos && "bg-[#E4E5EE]")}
-                                onClick={() => handleFilterClick('Todos')}
+                            <div className={cn("flex py-2 items-center w-full gap-x-4 rounded-full")}
+                                onClick={() => handleFilterChange('Todos')}
                             >
                                 <Checkbox />
                                 <span>Ver todos</span>
