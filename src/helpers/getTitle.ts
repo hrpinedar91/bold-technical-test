@@ -7,7 +7,7 @@ export const getTitle = (filter: any) => {
         case 'week':
             return 'Total de ventas de la semana';
         case 'month':
-            return 'Total de ventas del mes de septiembre';
+            return 'Total de ventas de septiembre';
         default:
             return 'Total de ventas'; // Valor por defecto
     }

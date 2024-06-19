@@ -9,7 +9,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Calculator, Link } from 'lucide-react'
+import { Calculator, Icon, Link } from 'lucide-react'
 import { Icons } from './Icons'
 import { useContext } from 'react'
 import { transactionsContext } from '@/context/TransactionsContext'
@@ -21,7 +21,7 @@ const TableContent = () => {
     const { filteredTransactions, filter } = useContext(transactionsContext)
     return (
         <div className='w-full'>
-            <div className='bg-custom-gradient-table px-12 py-2 rounded-t-xl'>
+            <div className='bg-custom-gradient-table px-4 md:px-12 py-2 rounded-t-xl'>
                 <p className='text-white text-lg md:text-2xl'>
                     {getTitle(filter)}
                 </p>
@@ -52,7 +52,12 @@ const TableContent = () => {
                                 <TableCell>{dato.fecha_y_hora}</TableCell>
                                 <TableCell>
                                     <div className='flex gap-2.5'>
-                                        <Icons.masterCard className='h-5 w-5' />
+
+                                        {
+                                            dato.metodo_de_pago.includes('Visa') ? <Icons.visa className='h-5 w-5' /> : dato.metodo_de_pago.includes("Amex") ? <Icons.amex className='h-5 w-5' /> : <Icons.masterCard className='h-5 w-5' />
+                                        }
+
+
                                         {dato.metodo_de_pago}
                                     </div>
 
@@ -75,12 +80,15 @@ const TableContent = () => {
                                 <TableCell className='flex gap-2.5 text-[#353C60]'>Método de pago:</TableCell>
                                 <TableCell>
                                     <div className='flex flex-col items-start gap-2 font-bold'>
-                                        <Icons.masterCard className='h-5 w-5' />
+                                        {
+                                            dato.metodo_de_pago.includes('Visa') ? <Icons.visa className='h-5 w-5' /> : dato.metodo_de_pago.includes("Amex") ? <Icons.amex className='h-5 w-5' /> : <Icons.masterCard className='h-5 w-5' />
+                                        }
+                                       
                                         {dato.metodo_de_pago}
                                     </div>
-                                        {
-                                            dato.cobroDatafono ? <span className='font-bold'>Datafono</span> : dato.cobroLinkPagos && <span className='font-bold'>Link de pagos</span>
-                                        }
+                                    {
+                                        dato.cobroDatafono ? <span className='font-bold'>Datafono</span> : dato.cobroLinkPagos && <span className='font-bold'>Link de pagos</span>
+                                    }
 
                                 </TableCell>
                                 <TableCell className='flex gap-2.5 text-[#353C60]'>ID Transacción Bold:</TableCell>
@@ -91,12 +99,12 @@ const TableContent = () => {
                                         {dato.monto.total}
                                     </span>
                                     <span>
-                                         {dato.monto.deduccion}
+                                        {dato.monto.deduccion}
                                     </span>
-                                    <span className={Number(dato.monto.comision) < 0 ? "text-red-600": ""}>
+                                    <span className={Number(dato.monto.comision) < 0 ? "text-red-600" : ""}>
                                         {dato.monto.comision}
                                     </span>
-                                   
+
                                 </TableCell>
                             </TableRow>
 

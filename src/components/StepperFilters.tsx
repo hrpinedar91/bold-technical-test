@@ -34,18 +34,18 @@ const StepperFilters = () => {
 
     return (
         <div className='flex flex-col items-end gap-2 text-primary-blue relative'>
-            <nav className="flex w-full justify-between items-center gap-x-4 bg-white p-2 font-semibold">
-                <div className={cn("flex flex-col py-2 items-center w-1/3 rounded-full", filter === 'today' && 'bg-[#e4e5ee]')}
+            <nav className="flex w-full justify-between items-center md:gap-x-4 bg-white p-2 font-semibold">
+                <div className={cn("flex flex-col py-2 items-center px-4 md:w-1/3 rounded-full", filter === 'today' && 'bg-[#e4e5ee]')}
                     onClick={() => handleFilterChange('today')}
                 >
                     <span>Hoy</span>
                 </div>
-                <div className={cn("flex flex-col py-2 items-center w-1/3 rounded-full", filter === 'week' && 'bg-[#e4e5ee]')}
+                <div className={cn("flex flex-col py-2 items-center px-4 md:w-1/3 rounded-full", filter === 'week' && 'bg-[#e4e5ee]')}
                     onClick={() => handleFilterChange('week')}
                 >
                     <span>Esta semana</span>
                 </div>
-                <div className={cn("flex flex-col py-2 items-center w-1/3 rounded-full", filter === 'month' && 'bg-[#e4e5ee]')}
+                <div className={cn("flex flex-col py-2 items-center px-4 md:w-1/3 rounded-full", filter === 'month' && 'bg-[#e4e5ee]')}
                     onClick={() => handleFilterChange('month')}
                 >
                     <span>Septiembre</span>
@@ -53,8 +53,10 @@ const StepperFilters = () => {
             </nav>
 
             <Collapsible className='bg-white rounded-lg absolute top-16 shadow-xl z-20'>
-                <CollapsibleTrigger className='flex w-full justify-end px-8 py-4 gap-x-8'>
-                    Filtrar
+                <CollapsibleTrigger className='flex w-full justify-end px-8 py-2.5 gap-x-8 text-primary-blue'>
+                   <span className='text-primary-blue font-semibold'>
+                   FILTRAR
+                    </span> 
                     <SlidersVertical size={20} className="ml-2" />
                 </CollapsibleTrigger>
                 <CollapsibleContent>
@@ -81,7 +83,8 @@ const StepperFilters = () => {
                                 />
                                 <Label htmlFor="todos">Todos</Label>
                             </div>
-                            <Button type="submit" className='rounded-full bg-red-700 hover:bg-red-700 hover:opacity-65'>Aplicar</Button>
+                            {/* <Button type="submit" className='rounded-full bg-red-700 hover:bg-red-700 hover:opacity-65'>Aplicar</Button> */}
+                            <Button type="submit" className={`rounded-full bg-red-700 hover:bg-red-700 hover:opacity-65 ${selectedFilter ? '' : 'opacity-50 cursor-not-allowed'}`} disabled={!selectedFilter}>Aplicar</Button>
                         </form>
                     </div>
                 </CollapsibleContent>
