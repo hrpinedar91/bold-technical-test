@@ -1,8 +1,8 @@
 'use client'
 
 
+import React, { useContext } from 'react'
 import { cn } from '@/lib/utils';
-import React, { useState, useContext } from 'react'
 import { SlidersVertical } from 'lucide-react';
 import {
     Popover,
@@ -23,8 +23,7 @@ const StepperFilters = () => {
 
     const handleFilterChange = (filter: string) => {
         setFilter(filter);
-        applyFilter(filter);
-        console.log(filter);
+        applyFilter(filter);       
     };
 
 

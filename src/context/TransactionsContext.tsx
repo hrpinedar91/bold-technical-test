@@ -72,10 +72,10 @@ const TransactionProvider = ({ children }: Props) => {
                         const transactionDate = new Date(Number(year), Number(month) - 1, Number(day));
                         return transactionDate >= startOfSeptemberLastYear && transactionDate <= endOfSeptemberLastYear;
                     });
-            case "cobroDatafono":
-                return transactions.filter(transaction => transaction.cobroDatafono);
-            case "cobroLinkPagos":
-                return transactions.filter(transaction => transaction.cobroLinkPagos);
+                    case "cobroDatafono":
+                        return transactions.filter(transaction => transaction.cobroDatafono === true);
+                    case "cobroLinkPagos":
+                        return transactions.filter(transaction => transaction.cobroLinkPagos === true);
             default:
                 return transactions;
         }

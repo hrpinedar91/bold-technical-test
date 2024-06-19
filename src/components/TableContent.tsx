@@ -11,23 +11,20 @@ import {
 } from "@/components/ui/table"
 import { Calculator, Link } from 'lucide-react'
 import { Icons } from './Icons'
-// import { transactions }  from '@/config/transactions'
 import { useContext } from 'react'
 import { transactionsContext } from '@/context/TransactionsContext'
+import { getTitle } from '@/helpers/getTitle'
 
 
+const TableContent = () => {
 
-interface Props {
-    range: string
-}
-
-const TableContent = ({range}: Props) => {
-
-    const {transactions, filteredTransactions} = useContext(transactionsContext)
+    const {filteredTransactions, filter} = useContext(transactionsContext)
     return (
         <div className='w-full'>
             <div className='bg-custom-gradient-table px-12 py-2 rounded-t-xl'>
-                <p className='text-white text-2xl'>Tus ventas de {range}</p>
+                <p className='text-white text-2xl'>
+                    {getTitle(filter)}
+                </p>
             </div>
             <Table>
                 <TableHeader>
@@ -41,21 +38,36 @@ const TableContent = ({range}: Props) => {
                 </TableHeader>
                 <TableBody className='bg-white'>
                     {filteredTransactions.map((dato, index) => (
-                        <TableRow key={index}>
-                            <TableCell className='flex gap-2.5 text-[#353C60]'>
-                                {dato.transaccion === 'Cobro exitoso' ? <Link fill='white' className='h-5 w-5' />  : <Calculator fill='white' className='h-5 w-5' />}
-                                {dato.transaccion}
-                            </TableCell>
+                        <TableRow key={index} className='w-full md:flex-row md:w-full border-l-2 border-b-0 border-primary-blue'>
+                                                
+                              
+                               
+                                <TableCell className='flex gap-2.5 text-[#353C60]'>
+                                    {dato.transaccion === 'Cobro exitoso' ? <Link fill='white' className='h-5 w-5' />  : <Calculator fill='white' className='h-5 w-5' />}
+                                    {dato.transaccion}
+                                </TableCell>
+                                
+                              
+                            
                             <TableCell>{dato.fecha_y_hora}</TableCell>
-                            <TableCell className='flex gap-2.5'>
-                                <Icons.masterCard className='h-5 w-5' />
-                                {dato.metodo_de_pago}
+                            <TableCell>
+                                <div className='flex gap-2.5'>
+                                    <Icons.masterCard className='h-5 w-5' />
+                                    {dato.metodo_de_pago}
+                                </div>
+                                
+                                    {
+                                        dato.cobroDatafono ? <span className='font-semibold pl-9'>Datafono</span> : dato.cobroLinkPagos && <span className='font-semibold pl-9'>Link de pagos</span>
+                                    }
+                            
                             </TableCell>
                             <TableCell>{dato.id_transaccion_bold}</TableCell>
                             <TableCell>{dato.monto.total}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
+                
+
             </Table>
         </div>
     )

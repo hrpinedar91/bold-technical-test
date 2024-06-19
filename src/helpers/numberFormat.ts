@@ -1,11 +1,15 @@
 export function numberFormat(number: number): string {
-    const formatter = new Intl.NumberFormat('es-CO', {
-        style: 'currency',
-        currency: 'COP',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
+    let numberStr = number.toString();    
+    let [integerPart, decimalPart] = numberStr.split('.');
+
+
+    integerPart = integerPart.replace(/\B(?=(\d{6})+(?!\d))/g, "′");    
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, function(match, offset, string) {        
+        return string[offset - 1] === "′" ? match : ".";
     });
 
+    numberStr = decimalPart ? integerPart + '.' + decimalPart : integerPart;
 
-    return formatter.format(number);
+ 
+    return "$" + numberStr;
 }
