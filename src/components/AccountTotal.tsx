@@ -51,7 +51,7 @@ const AccountTotal = () => {
                 </p>
                 <span className="text-[#353C60]">
                     {
-                        filter === 'today' ? formattedDate : filter === 'week' ? 'Esta semana' : 'Septiembre'
+                        filter === 'today' ? formattedDate : filter === 'week' ? 'Esta semana' : filter === 'month' ? 'Septiembre' : 'Total de ventas'
                     }
 
                 </span>

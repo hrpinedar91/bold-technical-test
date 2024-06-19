@@ -64,26 +64,29 @@ const StepperFilters = () => {
                         <form onSubmit={handleSubmit} className='flex space-y-4 flex-col p-4 px-6'>
                             <div className='flex gap-x-2.5'>
                                 <Checkbox
-                                    checked={selectedFilter === "cobroDatafono"}
+                                    id="cobroDatafono"
                                     onClick={() => handleCheckboxClick("cobroDatafono")}
+                                    checked={selectedFilter === "cobroDatafono"}
+                                    
                                 />
-                                <Label htmlFor="cobroDatafono">Cobro Datafono</Label>
+                                <Label htmlFor="cobroDatafono" className='cursor-pointer'>Cobro Datafono</Label>
                             </div>
                             <div className='flex gap-x-2.5'>
                                 <Checkbox
+                                    id="cobroLinkPagos"
                                     checked={selectedFilter === "cobroLinkPagos"}
                                     onClick={() => handleCheckboxClick("cobroLinkPagos")}
                                 />
-                                <Label htmlFor="cobroLinkPagos">Cobro con Link Pagos</Label>
+                                <Label htmlFor="cobroLinkPagos" className='cursos-pointer'>Cobro con Link Pagos</Label>
                             </div>
                             <div className='flex gap-x-2.5'>
                                 <Checkbox
                                     checked={selectedFilter === "todos"}
+                                    id="todos"
                                     onClick={() => handleCheckboxClick("todos")}
                                 />
-                                <Label htmlFor="todos">Todos</Label>
+                                <Label htmlFor="todos" className='cursor-pointer'>Todos</Label>
                             </div>
-                            {/* <Button type="submit" className='rounded-full bg-red-700 hover:bg-red-700 hover:opacity-65'>Aplicar</Button> */}
                             <Button type="submit" className={`rounded-full bg-red-700 hover:bg-red-700 hover:opacity-65 ${selectedFilter ? '' : 'opacity-50 cursor-not-allowed'}`} disabled={!selectedFilter}>Aplicar</Button>
                         </form>
                     </div>

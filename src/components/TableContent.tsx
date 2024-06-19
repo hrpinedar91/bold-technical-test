@@ -38,38 +38,50 @@ const TableContent = () => {
                 </TableHeader>
                 <TableBody className='bg-white'>
                     {filteredTransactions.map((dato, index) => (
-                        <>
-                            <TableRow key={index} className='hidden md:table-row md:w-full border-l-2 border-b-0 border-primary-blue'>
+                        <TableRow key={index} className='hidden md:table-row md:w-full border-l-2 border-b-0 border-primary-blue'>
 
 
-                                <TableCell className='flex gap-2.5 text-[#353C60]'>
-                                    {dato.transaccion === 'Cobro exitoso' ? <Link fill='white' className='h-5 w-5' /> : <Calculator fill='white' className='h-5 w-5' />}
-                                    {dato.transaccion}
-                                </TableCell>
+                            <TableCell className='flex gap-2.5 text-[#353C60]'>
+                                {dato.transaccion === 'Cobro exitoso' ? <Link fill='white' className='h-5 w-5' /> : <Calculator fill='white' className='h-5 w-5' />}
+                                {dato.transaccion}
+                            </TableCell>
 
 
 
-                                <TableCell>{dato.fecha_y_hora}</TableCell>
-                                <TableCell>
-                                    <div className='flex gap-2.5'>
-
-                                        {
-                                            dato.metodo_de_pago.includes('Visa') ? <Icons.visa className='h-5 w-5' /> : dato.metodo_de_pago.includes("Amex") ? <Icons.amex className='h-5 w-5' /> : <Icons.masterCard className='h-5 w-5' />
-                                        }
-
-
-                                        {dato.metodo_de_pago}
-                                    </div>
+                            <TableCell>{dato.fecha_y_hora}</TableCell>
+                            <TableCell>
+                                <div className='flex gap-2.5'>
 
                                     {
-                                        dato.cobroDatafono ? <span className='font-semibold pl-9'>Datafono</span> : dato.cobroLinkPagos && <span className='font-semibold pl-9'>Link de pagos</span>
+                                        dato.metodo_de_pago.includes('Visa') ? <Icons.visa className='h-5 w-5' /> : dato.metodo_de_pago.includes("Amex") ? <Icons.amex className='h-5 w-5' /> : <Icons.masterCard className='h-5 w-5' />
                                     }
 
-                                </TableCell>
-                                <TableCell>{dato.id_transaccion_bold}</TableCell>
-                                <TableCell>{dato.monto.total}</TableCell>
-                            </TableRow>
-                            <TableRow className='grid grid-cols-2 items-center text-pretty text-primary-blue md:hidden '>
+
+                                    {dato.metodo_de_pago}
+                                </div>
+
+                                {
+                                    dato.cobroDatafono ? <span className='font-semibold pl-9'>Datafono</span> : dato.cobroLinkPagos && <span className='font-semibold pl-9'>Link de pagos</span>
+                                }
+
+                            </TableCell>
+                            <TableCell>{dato.id_transaccion_bold}</TableCell>
+                            <TableCell className="flex flex-col">
+                                <span>
+                                    {dato.monto.total}
+                                </span>
+                                <span>
+                                    {dato.monto.deduccion}
+                                </span>
+                                <span className={Number(dato.monto.comision) < 0 ? "text-red-600" : ""}>
+                                    {dato.monto.comision}
+                                </span>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                    {
+                        filteredTransactions.map((dato, index) => (
+                            <TableRow key={index} className='grid grid-cols-2 items-center text-pretty text-primary-blue md:hidden '>
                                 <TableCell className='flex items-center gap-2.5 text-[#353C60]'>Transacción:</TableCell>
                                 <TableCell className='flex flex-col items-start gap-2.5 text-[#353C60] font-bold'>
                                     {dato.transaccion === 'Cobro exitoso' ? <Link fill='white' className='h-5 w-5' /> : <Calculator fill='white' className='h-5 w-5' />}
@@ -83,7 +95,7 @@ const TableContent = () => {
                                         {
                                             dato.metodo_de_pago.includes('Visa') ? <Icons.visa className='h-5 w-5' /> : dato.metodo_de_pago.includes("Amex") ? <Icons.amex className='h-5 w-5' /> : <Icons.masterCard className='h-5 w-5' />
                                         }
-                                       
+
                                         {dato.metodo_de_pago}
                                     </div>
                                     {
@@ -107,11 +119,8 @@ const TableContent = () => {
 
                                 </TableCell>
                             </TableRow>
-
-                        </>
-
-
-                    ))}
+                        ))
+                    }
                 </TableBody>
 
 
