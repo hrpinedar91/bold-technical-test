@@ -1,35 +1,40 @@
 'use client'
 
-
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { SlidersVertical } from 'lucide-react';
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from './ui/button';
 import { transactionsContext } from '@/context/TransactionsContext';
-
-
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { Checkbox } from './ui/checkbox';
+import { Label } from './ui/label';
 
 const StepperFilters = () => {
-
-    const { setFilter, applyFilter, filter } = useContext(transactionsContext);
-
-
+    const { filter, setFilter, applyFilter } = useContext(transactionsContext);
+    const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
     const handleFilterChange = (filter: string) => {
+        setSelectedFilter(filter);
         setFilter(filter);
-        applyFilter(filter);       
+        applyFilter(filter);
     };
 
+    const handleCheckboxClick = (filter: string) => {
+        setSelectedFilter(prevFilter => (prevFilter === filter ? null : filter));
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        handleFilterChange(selectedFilter || 'todos');
+    };
 
     return (
-        <div className='flex flex-col items-end gap-2 text-primary-blue'>
-            <nav className="flex w-full justify-between items-center gap-x-4 bg-white p-2  font-semibold">
+        <div className='flex flex-col items-end gap-2 text-primary-blue relative'>
+            <nav className="flex w-full justify-between items-center gap-x-4 bg-white p-2 font-semibold">
                 <div className={cn("flex flex-col py-2 items-center w-1/3 rounded-full", filter === 'today' && 'bg-[#e4e5ee]')}
                     onClick={() => handleFilterChange('today')}
                 >
@@ -45,45 +50,44 @@ const StepperFilters = () => {
                 >
                     <span>Septiembre</span>
                 </div>
-
             </nav>
 
-
-            <Popover>
-                    <PopoverTrigger>
-                <div className='bg-white w-fit flex gap-4 px-8 py-2.5 rounded-lg'>
-                        Filtrar
-              
-                    <SlidersVertical fill='#353c60' className='h-5 w-5' />
-                    <PopoverContent>
-                        <div className='flex flex-col gap-2 text-primary-blue font-semibold'>
-                            <div className={cn("flex py-2 items-center w-full gap-x-4 rounded-full")}
-                                onClick={() => handleFilterChange('CobroDatafono')}
-                            >
-                                <Checkbox />
-
-                                <span>Cobro datafono</span>
+            <Collapsible className='bg-white rounded-lg absolute top-16 shadow-xl z-20'>
+                <CollapsibleTrigger className='flex w-full justify-end px-8 py-4 gap-x-8'>
+                    Filtrar
+                    <SlidersVertical size={20} className="ml-2" />
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                    <div>
+                        <form onSubmit={handleSubmit} className='flex space-y-4 flex-col p-4 px-6'>
+                            <div className='flex gap-x-2.5'>
+                                <Checkbox
+                                    checked={selectedFilter === "cobroDatafono"}
+                                    onClick={() => handleCheckboxClick("cobroDatafono")}
+                                />
+                                <Label htmlFor="cobroDatafono">Cobro Datafono</Label>
                             </div>
-                            <div className={cn("flex py-2 items-center w-full gap-x-4 rounded-full")}
-                                onClick={() => handleFilterChange('CobroLinkPagos')}
-                            >
-                                <Checkbox />
-                                <span>Cobro link pagos</span>
+                            <div className='flex gap-x-2.5'>
+                                <Checkbox
+                                    checked={selectedFilter === "cobroLinkPagos"}
+                                    onClick={() => handleCheckboxClick("cobroLinkPagos")}
+                                />
+                                <Label htmlFor="cobroLinkPagos">Cobro con Link Pagos</Label>
                             </div>
-                            <div className={cn("flex py-2 items-center w-full gap-x-4 rounded-full")}
-                                onClick={() => handleFilterChange('Todos')}
-                            >
-                                <Checkbox />
-                                <span>Ver todos</span>
+                            <div className='flex gap-x-2.5'>
+                                <Checkbox
+                                    checked={selectedFilter === "todos"}
+                                    onClick={() => handleCheckboxClick("todos")}
+                                />
+                                <Label htmlFor="todos">Todos</Label>
                             </div>
-                            <Button className='bg-[#ed434e] rounded-full mx-12'>Aplicar</Button>
-                        </div>
-                    </PopoverContent>
-                </div>
-            </PopoverTrigger>
-            </Popover>
+                            <Button type="submit" className='rounded-full bg-red-700 hover:bg-red-700 hover:opacity-65'>Aplicar</Button>
+                        </form>
+                    </div>
+                </CollapsibleContent>
+            </Collapsible>
         </div>
-    )
-}
+    );
+};
 
-export default StepperFilters
+export default StepperFilters;

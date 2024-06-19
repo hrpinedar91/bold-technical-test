@@ -50,8 +50,9 @@ const TransactionProvider = ({ children }: Props) => {
         const endOfSeptemberLastYear = new Date(lastYear, 8, 30, 23, 59, 59);
 
         switch (filter) {
+            
             case "today":
-                
+
                 return transactions.filter(transaction => {
                     const [day, month, year] = transaction.fecha_y_hora.split(' - ')[0].split('/');
                     const transactionDate = new Date(Number(year), Number(month) - 1, Number(day));
@@ -66,16 +67,16 @@ const TransactionProvider = ({ children }: Props) => {
                     const transactionDate = new Date(transaction.fecha_y_hora.split(' - ')[0].split('/').reverse().join('-'));
                     return transactionDate >= startOfWeek && transactionDate <= new Date();
                 });
-                case "month":
-                    return transactions.filter(transaction => {
-                        const [day, month, year] = transaction.fecha_y_hora.split(' - ')[0].split('/');
-                        const transactionDate = new Date(Number(year), Number(month) - 1, Number(day));
-                        return transactionDate >= startOfSeptemberLastYear && transactionDate <= endOfSeptemberLastYear;
-                    });
-                    case "cobroDatafono":
-                        return transactions.filter(transaction => transaction.cobroDatafono === true);
-                    case "cobroLinkPagos":
-                        return transactions.filter(transaction => transaction.cobroLinkPagos === true);
+            case "month":
+                return transactions.filter(transaction => {
+                    const [day, month, year] = transaction.fecha_y_hora.split(' - ')[0].split('/');
+                    const transactionDate = new Date(Number(year), Number(month) - 1, Number(day));
+                    return transactionDate >= startOfSeptemberLastYear && transactionDate <= endOfSeptemberLastYear;
+                });
+            case "cobroDatafono":
+                return transactions.filter(transaction => transaction.cobroDatafono === true);
+            case "cobroLinkPagos":
+                return transactions.filter(transaction => transaction.cobroLinkPagos === true);
             default:
                 return transactions;
         }
