@@ -36,7 +36,7 @@ const TableContent = () => {
                         <TableHead>Monto</TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody className='bg-white text-lg'>
+                <TableBody className='bg-white md:text-lg'>
                     {filteredTransactions.map((dato, index) => (
                         <TableRow key={index} className='hidden md:table-row md:items-center md:align-middle md:w-full border-l-2 border-b-0 border-primary-blue'>
 
