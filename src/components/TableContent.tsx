@@ -28,7 +28,7 @@ const TableContent = () => {
             </div>
             <Table>
                 <TableHeader className='hidden md:table-header-group'>
-                    <TableRow className='bg-white text-primary-blue font-semibold text-center'>
+                    <TableRow className='bg-white text-primary-blue md:text-lg font-semibold text-center'>
                         <TableHead>Transacción</TableHead>
                         <TableHead>Fecha y hora</TableHead>
                         <TableHead>Método de pago</TableHead>
@@ -36,7 +36,7 @@ const TableContent = () => {
                         <TableHead>Monto</TableHead>
                     </TableRow>
                 </TableHeader>
-                <TableBody className='bg-white'>
+                <TableBody className='bg-white text-lg'>
                     {filteredTransactions.map((dato, index) => (
                         <TableRow key={index} className='hidden md:table-row md:items-center md:align-middle md:w-full border-l-2 border-b-0 border-primary-blue'>
 

@@ -34,7 +34,7 @@ const StepperFilters = () => {
 
     return (
         <div className='flex flex-col items-end gap-2 text-primary-blue relative'>
-            <nav className="flex w-full justify-between items-center text-sm md:gap-x-4 bg-white p-2 font-semibold">
+            <nav className="flex w-full justify-between items-center text-sm md:text-lg md:gap-x-4 bg-white p-2 font-semibold">
                 <div className={cn("flex flex-col py-2 items-center px-4 md:w-1/3 rounded-full", filter === 'today' && 'bg-[#e4e5ee]')}
                     onClick={() => handleFilterChange('today')}
                 >
@@ -52,7 +52,7 @@ const StepperFilters = () => {
                 </div>
             </nav>
 
-            <Collapsible className='bg-white rounded-lg absolute top-16 shadow-xl z-20'>
+            <Collapsible className='bg-white rounded-lg absolute top-16 md:top-20 shadow-xl z-20'>
                 <CollapsibleTrigger className='flex w-full justify-end px-8 py-2.5 gap-x-8 text-primary-blue'>
                     <span className='text-primary-blue font-semibold'>
                         FILTRAR

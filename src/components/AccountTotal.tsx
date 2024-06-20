@@ -28,7 +28,7 @@ const AccountTotal = () => {
     return (
         <div className="bg-white w-full md:w-2/5 h-[200px] rounded-xl flex flex-col">
             <div className="flex justify-between items-center bg-custom-gradient-secundary px-4 py-2.5 rounded-t-xl">
-                <h3 className="text-white font-semibold sm:text-lg px-4 py-2.5 opacity-90">
+                <h3 className="text-white font-semibold sm:text-lg md:text-2xl px-4 py-2.5 opacity-90">
                     {getTitle(filter)}
                 </h3>
                 <TooltipProvider>
