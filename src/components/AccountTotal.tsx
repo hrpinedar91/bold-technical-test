@@ -28,13 +28,13 @@ const AccountTotal = () => {
     return (
         <div className="bg-white w-full md:w-2/5 h-[200px] rounded-xl flex flex-col">
             <div className="flex justify-between items-center bg-custom-gradient-secundary px-4 py-2.5 rounded-t-xl">
-                <h3 className="text-white font-semibold text-lg px-4 py-2.5 opacity-90">
+                <h3 className="text-white font-semibold sm:text-lg px-4 py-2.5 opacity-90">
                     {getTitle(filter)}
                 </h3>
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger>
-                            <Info className="h-5 w-5 text-white" />
+                            <Info className="h-7 w-7 text-white" />
                         </TooltipTrigger>
                         <TooltipContent>
                             <p>El total de tus ventas {filter === "today" ? "de hoy" : filter === "week" ? "esta semana" : "de septiembre"}</p>
@@ -44,7 +44,7 @@ const AccountTotal = () => {
 
             </div>
             <div className="flex flex-col items-center p-8">
-                <p className="text-5xl font-bold text-gradient-secundary">
+                <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient-secundary">
                     {
                         numberFormat(totalAmountTransaction)
                     }

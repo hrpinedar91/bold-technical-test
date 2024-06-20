@@ -23,10 +23,10 @@ const Navbar = () => {
                             </div>                           
                             <div className='ml-auto flex items-center gap-4 md:gap-x-8 opacity-80'>
                                 <Link className='cursor-pointer' href='/mi-negocio'>
-                                    <span className='text-white text-lg'>Mi negocio</span>
+                                    <span className='text-white md:text-lg'>Mi negocio</span>
                                 </Link>
                                 <Link className='flex items-center gap-2.5 cursor-pointer' href='/ayuda'>
-                                    <span className='text-white text-lg md:ml-4'>Ayuda</span>
+                                    <span className='text-white md:text-lg md:ml-4'>Ayuda</span>
                                     <TooltipProvider>
                                         <Tooltip>
                                             <TooltipTrigger>

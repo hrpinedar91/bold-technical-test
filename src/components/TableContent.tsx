@@ -38,12 +38,15 @@ const TableContent = () => {
                 </TableHeader>
                 <TableBody className='bg-white'>
                     {filteredTransactions.map((dato, index) => (
-                        <TableRow key={index} className='hidden md:table-row md:w-full border-l-2 border-b-0 border-primary-blue'>
+                        <TableRow key={index} className='hidden md:table-row md:items-center md:align-middle md:w-full border-l-2 border-b-0 border-primary-blue'>
 
 
-                            <TableCell className='flex gap-2.5 text-[#353C60]'>
-                                {dato.transaccion === 'Cobro exitoso' ? <Link fill='white' className='h-5 w-5' /> : <Calculator fill='white' className='h-5 w-5' />}
-                                {dato.transaccion}
+                            <TableCell className='text-[#353C60]'>
+                                <div className='flex gap-2.5'>
+                                    {dato.transaccion === 'Cobro exitoso' ? <Link fill='white' className='h-5 w-5' /> : <Calculator fill='white' className='h-5 w-5' />}
+                                    {dato.transaccion}
+
+                                </div>
                             </TableCell>
 
 
